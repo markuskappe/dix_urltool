@@ -1,0 +1,61 @@
+<f:layout name="Module" />
+
+<f:section name="header">
+</f:section>
+
+<f:section name="module-headline">
+	<h1>Realurl Configuration</h1>
+</f:section>
+
+<f:section name="main">
+
+	<p>Edit the realurl config, load an example to kickstart.</p>
+	<f:form action="setconfig" method="post" name="configdata">
+
+		<div class="form-group">
+	    <label for="input_activate">Activate realurl configuration with Urltool</label>
+		  <div class="checkbox">
+		    <label>
+		      <f:form.hidden property="activate" value="0" />
+		      <f:form.checkbox property="activate" value="1" id="input_activate" checked="{values.activated}" /> Activate
+		    </label>
+		  </div>
+	  </div>
+		<div id="activated">
+
+		  <div class="form-group">
+		    <label for="input_cfg">Realurl configuration</label>
+		    <span class="help-block">{values.path}</span>
+		    <f:form.textarea rows="20" class="form-control" id="input_cfg" property="cfg" value="{values.cfg}" />
+		    <span class="help-block"><a href="#" id="loaddefault">Load Default-Configuration (will overwrite input-field)</a></span>
+		  </div>
+
+
+		</div>
+		<f:form.submit value="Save" class="btn btn-default" />
+
+
+
+	</f:form>
+
+	<script>
+		TYPO3.jQuery(document).ready( function($){
+			$('#input_activate').change(function(){
+				if ($(this).is(':checked')) {
+					$('#activated').show();
+				} else {
+					$('#activated').hide();
+				}
+			}).change();
+			$('#loaddefault').click(function(e){
+				e.preventDefault();
+				$.getJSON(
+					'<f:uri.action action="getdefaultconfig" />',
+					function(data){
+						$('#input_cfg').val(data);
+					});
+			});
+		});
+	</script>
+
+</f:section>

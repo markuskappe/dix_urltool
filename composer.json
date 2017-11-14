@@ -1,0 +1,22 @@
+{
+    "name": "DIX/dix-urltool",
+    "type": "typo3-cms-extension",
+    "description": "Manage realurl configuration",
+    "license": ["GPL-2.0+"],
+    "keywords": ["TYPO3 CMS", "realurl", "404"],
+    "support": {
+        "issues": ""
+    },
+    "require": {
+        "typo3/cms-core": "^7.6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "DIX\\DixUrltool\\": "Classes/"
+        }
+    },
+    "replace": {
+        "dix_urltool": "self.version",
+        "typo3-ter/dix-urltool": "self.version"
+    }
+}

@@ -1,0 +1,112 @@
+<f:layout name="Module" />
+
+<f:section name="header">
+</f:section>
+
+<f:section name="module-headline">
+	<h1>404 Handling</h1>
+</f:section>
+
+<f:section name="main">
+	<p>How TYPO3 should handle requests for non-existing/accessible pages.</p>
+	<f:form action="setdnf" method="post" name="dnfdata">
+
+
+		<div class="form-group">
+	    <label for="input_activate">Activate 404 configuration with Urltool</label>
+		  <div class="checkbox">
+		    <label>
+		      <f:form.hidden property="activate" value="0" />
+		      <f:form.checkbox property="activate" value="1" id="input_activate" checked="{values.activated}" /> Activate
+		    </label>
+		  </div>
+	  </div>
+
+		<div id="activated">
+		  <div class="form-group">
+		    <label for="input_headersel">Header</label>
+		    <select class="form-control" id="input_headersel" name="tx_dixurltool_tools_dixurltoolurltool[dnfdata][headersel]">
+				  <option value="404" {f:if(condition:'{values.headersel} == "404"', then:'selected="selected"')}>HTTP/1.0 404 Not Found</option>
+				  <option value="custom" {f:if(condition:'{values.headersel} == "custom"', then:'selected="selected"')}>Custom</option>
+				</select>
+		  </div>
+		  <div class="form-group customheader">
+		    <label for="input_header">Custom HTTP Header</label>
+		    <f:form.textfield class="form-control" id="input_header" placeholder="HTTP/1.0 404 Not Found" property="customheader" value="{values.header}" />
+		  </div>
+	
+		  <div class="form-group">
+		    <label for="input_mode">Mode</label>
+		    <select class="form-control" id="input_mode" name="tx_dixurltool_tools_dixurltoolurltool[dnfdata][mode]">
+				  <option value="rootline" {f:if(condition:'{values.mode} == "rootline"', then:'selected="selected"')} data-placeholder="">Next Page in Rootline</option>
+				  <option value="error" {f:if(condition:'{values.mode} == "error"', then:'selected="selected"')} data-placeholder="">Error Message</option>
+				  <option value="page" {f:if(condition:'{values.mode} == "page"', then:'selected="selected"')} data-placeholder="Page uid or alias">Page</option>
+				  <option value="redirect" {f:if(condition:'{values.mode} == "redirect"', then:'selected="selected"')} data-placeholder="Filename, e.g. notfound.html">Redirect</option>
+				  <option value="file" {f:if(condition:'{values.mode} == "file"', then:'selected="selected"')} data-placeholder="Filename, e.g. notfound.html">File</option>
+				  <option value="userfunc" {f:if(condition:'{values.mode} == "userfunc"', then:'selected="selected"')} data-placeholder="Function call, e.g. thenotfoundclass->notfoundhandler">User Function</option>
+				</select>
+		  </div>
+		  <p class="explain explain-rootline">
+	      The next visible page upwards in the page tree is shown - if applicable, e.g. page with access restriction. Otherwise an exception is thrown (this is subject to the error reporting settings and may differ if you match with devIPmask. Use install tool for further configuration.)
+	    </p>
+		  <p class="explain explain-error">
+	      An error message is shown.
+	    </p>
+		  <p class="explain explain-page">
+	        Static HTML file to show (reads content and outputs with correct headers), e.g. 'notfound.html' or 'http://www.example.org/errors/notfound.html'.
+	    </p>
+		  <p class="explain explain-redirect">
+	        It will redirect to the given URL/script.
+	    </p>
+		  <p class="explain explain-file">
+	        It will expect the given string to be a HTML file which will be read and outputted directly after having the marker "###CURRENT_URL###" substituted with REQUEST_URI and ###REASON### with reason text, for example: "fileadmin/notfound.html".
+	    </p>
+		  <p class="explain explain-userfunc">
+	        A user function is called, e.g. "fileadmin/class.user_notfound.php:user_notFound->pageNotFound" where the file must contain a class "user_notFound" with a method "pageNotFound" inside with two parameters $param and $ref.
+	    </p>
+	
+	
+		  <div class="form-group" id="additionaldata">
+		    <label for="input_data">Additional Data</label>
+		    <f:form.textfield class="form-control" id="input_data" property="adddata" value="{values.adddata}" />
+		  </div>
+		</div>
+	
+		<f:form.submit value="Save" class="btn btn-default" />
+	</f:form>
+
+	<a href="../index.php?id=14274897541657984156798436789" target="_blank">Testlink</a>
+	
+	<script>
+		TYPO3.jQuery(document).ready( function($){
+			$('#input_activate').change(function(){
+				if ($(this).is(':checked')) {
+					$('#activated').show();
+				} else {
+					$('#activated').hide();
+				}
+			}).change();
+			$('#input_mode').change(function(){
+				$('.explain').hide();
+				var sel = $(this).val();
+				$('.explain-'+sel).show();
+				var d = $(this).find(':selected').data('placeholder');
+				if (d) {
+					$('#additionaldata').show();
+					$('#input_data').attr('placeholder', d);
+				} else {
+					$('#additionaldata').hide();
+				}
+			}).change();
+			$('#input_headersel').change(function(){
+				var sel = $(this).val();
+				if (sel == 'custom') {
+					$('.customheader').show();
+				} else {
+					$('.customheader').hide();
+				}
+			}).change();
+		});
+	</script>
+
+</f:section>

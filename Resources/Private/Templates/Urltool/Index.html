@@ -1,0 +1,57 @@
+<f:layout name="Module" />
+
+<f:section name="header">
+</f:section>
+
+<f:section name="module-headline">
+	<h1>Info / Help</h1>
+</f:section>
+
+<f:section name="main">
+
+
+<pre>
+<strong>404-Error-Handling with TYPO3</strong>
+
+The variables for the 404 Error-Handling are saved into the file typo3conf/urltoolconf_404.php.
+include(PATH_typo3conf.'urltoolconf_404.php'); is added to typo3conf/AdditionalConfiguration.php
+
+    [FE][pageNotFound_handling]
+    Strings: redirect URL, eg. 'notfound.html' or 'http://www.domain.org/errors/notfound.html'.
+
+    If prefixed with "READFILE:" then it will expect the remaining string to be a HTML file which will be read and outputted directly after having the marker "###CURRENT_URL###" substituted with REQUEST_URI and ###REASON### with reason text,
+    for example: "READFILE:fileadmin/notfound.html".
+
+    [FE][pageNotFound_handling_statheader]
+    If 'pageNotFound_handling' is enabled, this string will always be sent as header before the actual handling.
+
+    More information ...
+    - Install-Tool (All configuration)
+    - http://www.typo3.net/backendkonfiguration/frontend_konfiguration/#pageNotFound_handling
+
+    Attention: This extension updates the file AdditionalConfiguration.php of your TYPO3-Installation!
+
+<strong>RealUrl-Configuration</strong>
+
+Settings for the Realurl-Configuration are saved into the file typo3conf/urltoolconf_realurl.php.
+include(PATH_typo3conf.'urltoolconf_realurl.php'); is added to typo3conf/AdditionalConfiguration.php
+
+more information:
+
+    - <a href="https://github.com/dmitryd/typo3-realurl/wiki" target="_blank">realurl documentation</a>
+    - <a href="https://docs.typo3.org/typo3cms/extensions/realurl/" target="_blank">realurl documentation (legacy)</a>
+
+    Attention: This extension updates the file AdditionalConfiguration.php of your TYPO3-Installation!
+
+
+<strong>Miscellaneous</strong>
+
+	- Flushing the system cache also flushes the realurl cache (maybe you have to enable system cache flushing in the install tool). This affects urldata, not pathdata.
+	- 404 error handling works now with multiple languages (when in page mode)
+	- since realurl 2.0 there is no error log anymore
+	- you can use umlauts and alike in URLs, but be aware that this is experimental. Enable this feature in the extension manager configuration. Please contact me, when you run into any issues.
+
+Author
+Markus Kappe, <a href="mailto:markus.kappe@dix.at">markus.kappe@dix.at</a>
+</pre>
+</f:section>

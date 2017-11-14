@@ -1,0 +1,12 @@
+
+ # Module configuration
+module.tx_dixurltool_tools_dixurltoolurltool {
+	view {
+		templateRootPaths.0 = EXT:dix_urltool/Resources/Private/Templates/
+		templateRootPaths.1 = {$module.tx_dixurltool_urltool.view.templateRootPath}
+		partialRootPaths.0 = {EXT:dix_urltool/Resources/Private/Partials/
+		partialRootPaths.1 = {$module.tx_dixurltool_urltool.view.partialRootPath}
+		layoutRootPaths.0 = EXT:dix_urltool/Resources/Private/Layouts/
+		layoutRootPaths.1 = {$module.tx_dixurltool_urltool.view.layoutRootPath}
+	}
+}

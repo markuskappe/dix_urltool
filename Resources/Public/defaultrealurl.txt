@@ -1,0 +1,101 @@
+<?php
+
+/**
+* dix_UrlTool default realurl configuration
+*/
+
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']= [
+	'_DEFAULT' => [
+		'init' => [ 
+			'appendMissingSlash' => 'ifNotFile,redirect',
+			'emptyUrlReturnValue' => '/',
+		],
+		'pagePath' => [
+			'rootpage_id' => '1', // may get overridden by domain configuration below
+		],
+		'fileName' => [
+			'defaultToHTMLsuffixOnPrev' => 0,
+			'acceptHTMLsuffix' => 1,
+			'index' => [
+				'print' => [
+					'keyValues' => [
+						'type' => 98,
+					],
+				],
+				'feed.rss' => [ // like in the example from EXT:news
+					'keyValues' => [
+						'type' => 9818,
+					],
+				],
+			],
+		],
+		'preVars' => [
+			[
+				'GETvar' => 'no_cache',
+				'valueMap' => [
+					'nc' => '1',
+				],
+				'noMatch' => 'bypass'
+			], [
+				'GETvar' => 'L',
+				'valueMap' => [ 
+					'de' => '0',
+					'en' => '1',
+				],
+				'noMatch' => 'bypass',
+			],
+		],
+		'postVarSets' => [
+			'_DEFAULT' => [
+				// EXT:tt_news start
+				'article' => [
+					[
+						'GETvar' => 'tx_ttnews[tt_news]',
+						'lookUpTable' => [
+							'table' => 'tt_news',
+							'id_field' => 'uid',
+							'alias_field' => 'title',
+							'addWhereClause' => ' AND NOT deleted',
+							'useUniqueCache' => '1',
+							'useUniqueCache_conf' => [
+								'strtolower' => '1',
+								'spaceCharacter' => '-',
+							],
+						],
+					],
+				],
+				// EXT:tt_news end
+				// EXT:news start
+				'newsarticle' => [
+					// action and controller can be omitted when news is properly configured. see documentation of the news extension.
+					[
+						'GETvar' => 'tx_news_pi1[action]',
+					], [
+						'GETvar' => 'tx_news_pi1[controller]',
+					], [
+						'GETvar' => 'tx_news_pi1[news]',
+						'lookUpTable' => [
+							'table' => 'tx_news_domain_model_news',
+							'id_field' => 'uid',
+							'alias_field' => 'title',
+							'addWhereClause' => ' AND NOT deleted',
+							'useUniqueCache' => 1,
+							'useUniqueCache_conf' => [
+								'strtolower' => 1,
+								'spaceCharacter' => '-',
+							],
+							'languageGetVar' => 'L',
+							'languageExceptionUids' => '',
+							'languageField' => 'sys_language_uid',
+							'transOrigPointerField' => 'l10n_parent',
+							'autoUpdate' => 1,
+							'expireDays' => 180,
+						],
+					],
+				],
+				// EXT:news end
+			],
+		],
+	],
+];
+

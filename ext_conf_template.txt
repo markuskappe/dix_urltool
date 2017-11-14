@@ -1,0 +1,2 @@
+  # cat=basic; type=boolean; label= Allow Umlauts in URL : If checked, also German Umlauts and alike can be part of the URL. Otherwise they get substituted like ä => ae and so on. The urls will be re-generated when editing the page title or clearing the pathdata (in DB)
+allowUmlauts = 
